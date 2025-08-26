@@ -2,10 +2,10 @@ import express from "express"
 import { authMiddleware } from "./middleware";
 import { prismaClient } from "db/client";
 import cors from "cors";
+import { Transaction, SystemProgram, Connection } from "@solana/web3.js";
 
 
-
-
+const connection = new Connection("https://api.mainnet-beta.solana.com");
 const app = express();
 
 app.use(cors());

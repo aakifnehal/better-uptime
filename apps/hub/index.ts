@@ -5,19 +5,32 @@ import { PublicKey } from "@solana/web3.js";
 import nacl from "tweetnacl";
 import nacl_util from "tweetnacl-util";
 
+console.log("Hub server script started...");
+
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
 const availableValidators: { validatorId: string, socket: ServerWebSocket<unknown>, publicKey: string }[] = [];
 
 const CALLBACKS : { [callbackId: string]: (data: IncomingMessage) => void } = {}
-const COST_PER_VALIDATION = 100; // in lamports = 0.0001 SOL
+const COST_PER_VALIDATION = 100; // in lamports
 
-Bun.serve({
-    fetch(req, server) {
-      if (server.upgrade(req)) {
-        return;
-      }
-      return new Response("Upgrade failed", { status: 500 });
-    },
-    port: 8081,
+console.log("Starting hub server on port 8081...");
+
+try {
+    const server = Bun.serve({
+        fetch(req, server) {
+          if (server.upgrade(req)) {
+            return;
+          }
+          return new Response("Upgrade failed", { status: 500 });
+        },
+        port: 8081,
     websocket: {
         async message(ws: ServerWebSocket<unknown>, message: string) {
             const data: IncomingMessage = JSON.parse(message);
@@ -33,15 +46,23 @@ Bun.serve({
                     await signupHandler(ws, data.data);
                 }
             } else if (data.type === 'validate') {
-                CALLBACKS[data.data.callbackId](data);
-                delete CALLBACKS[data.data.callbackId];
+                const callback = CALLBACKS[data.data.callbackId];
+                if (callback) {
+                    callback(data);
+                    delete CALLBACKS[data.data.callbackId];
+                }
             }
         },
         async close(ws: ServerWebSocket<unknown>) {
             availableValidators.splice(availableValidators.findIndex(v => v.socket === ws), 1);
         }
     },
-});
+    });
+
+    console.log("Hub WebSocket server started successfully on ws://localhost:8081");
+} catch (error) {
+    console.error("Failed to start hub server:", error);
+}
 
 async function signupHandler(ws: ServerWebSocket<unknown>, { ip, publicKey, signedMessage, callbackId }: SignupIncomingMessage) {
     const validatorDb = await prismaClient.validator.findFirst({
@@ -136,8 +157,8 @@ setInterval(async () => {
                     await prismaClient.$transaction(async (tx) => {
                         await tx.websiteTick.create({
                             data: {
-                                websiteId: website.id,
-                                validatorId,
+                                website: { connect: { id: website.id } },
+                                validator: { connect: { id: validatorId } },
                                 status,
                                 latency,
                                 createdAt: new Date(),
@@ -148,11 +169,11 @@ setInterval(async () => {
                             where: { id: validatorId },
                             data: {
                                 pendingPayouts: { increment: COST_PER_VALIDATION },
-                            },
+                            } as any,
                         });
                     });
                 }
             };
         });
     }
-}, 60 * 1000);
+}, 30 * 1000);

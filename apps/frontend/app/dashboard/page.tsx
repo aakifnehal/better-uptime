@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useMemo } from 'react';
 import { ChevronDown, ChevronUp, Globe, Plus, Moon, Sun } from 'lucide-react';
-import { useWebsites } from "@/hooks/useWebsite";
+import { useWebsites } from '@/hooks/useWebsite';
 import axios from 'axios';
 import { API_BACKEND_URL } from '@/config';
 import { useAuth } from '@clerk/nextjs';
@@ -220,7 +220,7 @@ function App() {
         </div>
         
         <div className="space-y-4">
-          {processedWebsites.map((website) => (
+          {processedWebsites.map((website: ProcessedWebsite) => (
             <WebsiteCard key={website.id} website={website} />
           ))}
         </div>
