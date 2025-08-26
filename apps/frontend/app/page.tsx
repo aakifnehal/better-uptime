@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { useRouter } from 'next/navigation';
 import { 
   Shield, 
   Globe, 
@@ -23,6 +24,7 @@ import {
 
 export default function Home() {
   const [email, setEmail] = useState('');
+  const router = useRouter();
 
   const features = [
     {
@@ -123,14 +125,8 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             <div className="flex w-full sm:w-auto">
-              <Input 
-                placeholder="Enter your email address" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="rounded-r-none w-full sm:w-80"
-              />
-              <Button className="rounded-l-none bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-                Start Earning
+              <Button onClick={() => router.push('/dashboard')} className=" bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+                Start Monitoring
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
