@@ -4,11 +4,6 @@
 
 ### *A distributed website uptime monitoring system that leverages global validators*
 
-[![Made with Bun](https://img.shields.io/badge/Made%20with-Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white)](https://bun.sh)
-[![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
-[![Powered by Solana](https://img.shields.io/badge/Powered%20by-Solana-%239945FF.svg?style=for-the-badge&logo=solana&logoColor=white)](https://solana.com)
-[![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
-
 **🚀 Comprehensive coverage beyond traditional major city-based monitoring**
 
 ---
