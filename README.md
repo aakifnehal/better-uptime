@@ -1,135 +1,326 @@
-# Turborepo starter
+<div align="center">
 
-This Turborepo starter is maintained by the Turborepo core team.
+# 🌍 Better Uptime 🌍
 
-## Using this example
+### *A distributed website uptime monitoring system that leverages global validators*
 
-Run the following command:
+[![Made with Bun](https://img.shields.io/badge/Made%20with-Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white)](https://bun.sh)
+[![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
+[![Powered by Solana](https://img.shields.io/badge/Powered%20by-Solana-%239945FF.svg?style=for-the-badge&logo=solana&logoColor=white)](https://solana.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
 
-```sh
-npx create-turbo@latest
-```
+**🚀 Comprehensive coverage beyond traditional major city-based monitoring**
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+</div>
 
-### Apps and Packages
+## 🏗️ Architecture Overview
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+Better Uptime is built as a **Turborepo monorepo** using modern technologies to create a scalable, distributed uptime monitoring platform.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+### System Components
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │      API        │    │      Hub        │
+│   (Next.js)     │◄──►│   (Express)     │◄──►│   (WebSocket)   │
+│                 │    │                 │    │                 │
+│ • Dashboard     │    │ • REST APIs     │    │ • Validator     │
+│ • Auth (Clerk)  │    │ • JWT Auth      │    │   Coordination  │
+│ • Real-time UI  │    │ • Database ORM  │    │ • Task Queue    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                │                        │
+                                │        ┌─────────────────┐
+                                │        │   Validators    │
+                                │        │   (Bun Workers) │
+                                │        │                 │
+                                │        │ • URL Testing   │
+                                └────────┤ • Crypto Auth   │
+                                         │ • Latency Track │
+                                         └─────────────────┘
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## 🛠️ Tech Stack
+
+<div align="center">
+
+### 🎯 **Core Technologies**
+
+| Component | Technology | Description |
+|-----------|------------|-------------|
+| **Runtime** | ![Bun](https://img.shields.io/badge/Bun-%23000000.svg?style=flat-square&logo=bun&logoColor=white) | Fast JavaScript runtime |
+| **Monorepo** | ![Turborepo](https://img.shields.io/badge/Turborepo-%23EF4444.svg?style=flat-square&logo=turborepo&logoColor=white) | Efficient builds and development |
+| **Database** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-%23316192.svg?style=flat-square&logo=postgresql&logoColor=white) | With Prisma ORM |
+| **Authentication** | ![Clerk](https://img.shields.io/badge/Clerk-%236C47FF.svg?style=flat-square&logo=clerk&logoColor=white) | User management |
+| **Blockchain** | ![Solana](https://img.shields.io/badge/Solana-%239945FF.svg?style=flat-square&logo=solana&logoColor=white) | Validator incentives |
+
+</div>
+
+### 🎨 Frontend Stack
+- **Framework**: Next.js 15 with React 19
+- **Styling**: Tailwind CSS v4
+- **UI Components**: Radix UI primitives
+- **Icons**: Lucide React
+- **Theme**: Next-themes for dark/light mode
+
+### ⚡ Backend Stack
+- **API Server**: Express.js with TypeScript
+- **WebSocket Hub**: Bun native WebSocket server
+- **Database ORM**: Prisma Client
+- **Authentication**: JSON Web Tokens (JWT)
+- **CORS**: Configured for cross-origin requests
+
+### Infrastructure
+- **Package Manager**: Bun (v1.2.10)
+- **Node Version**: >= 18
+- **Database**: PostgreSQL
+- **Blockchain Network**: Solana Mainnet
+
+## 📁 Project Structure
 
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+better-uptime/
+├── apps/                     # Application services
+│   ├── frontend/            # Next.js dashboard application
+│   ├── api/                 # Express REST API server
+│   ├── hub/                 # WebSocket coordination hub
+│   └── validator/           # Distributed validator nodes
+├── packages/                # Shared packages
+│   ├── db/                  # Prisma database client
+│   ├── common/              # Shared TypeScript types
+│   ├── ui/                  # Reusable UI components
+│   ├── eslint-config/       # ESLint configurations
+│   └── typescript-config/   # TypeScript configurations
+└── Configuration files
 ```
 
-### Develop
+## 🎯 Key Features
 
-To develop all apps and packages, run the following command:
+<div align="center">
 
-```
-cd my-turborepo
+### 🏢 **For Business Owners**
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+| Feature | Description | Benefit |
+|---------|-------------|---------|
+| 🌍 **Global Coverage** | Website monitoring from diverse geographical locations | Comprehensive uptime insights |
+| 📊 **Real-time Dashboard** | Live status updates and historical data | Instant visibility |
+| 🚨 **Custom Alerts** | Configurable notifications for downtime events | Proactive monitoring |
+| ⚡ **Latency Tracking** | Response time monitoring across regions | Performance optimization |
+| 📈 **Geographic Analytics** | Performance insights by validator location | Regional insights |
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+### 💰 **For Validators (Earnings)**
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+| Feature | Description | Reward |
+|---------|-------------|--------|
+| 🏆 **Decentralized Earning** | Get paid for validating websites | Crypto rewards |
+| 🔐 **Cryptographic Authentication** | Solana wallet-based validator verification | Secure identity |
+| 🗺️ **Location-based Rewards** | Premium rates for underserved geographical areas | Higher payouts |
+| 🔄 **Automated Payouts** | Smart contract-based compensation system | Seamless payments |
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+</div>
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+## 🏃‍♂️ Quick Start
 
-### Remote Caching
+### Prerequisites
+- Bun >= 1.2.10
+- Node.js >= 18
+- PostgreSQL database
+- Solana wallet (for validators)
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+### Installation
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+```bash
+# Clone the repository
+git clone https://github.com/aakifnehal/better-uptime.git
+cd better-uptime
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+# Install dependencies
+bun install
 
-```
-cd my-turborepo
+# Set up environment variables
+cp .env.example .env
+# Configure your DATABASE_URL, CLERK_SECRET_KEY, etc.
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+# Initialize database
+cd packages/db
+bunx prisma migrate dev
+bunx prisma generate
 ```
 
-## Useful Links
+### Development
 
-Learn more about the power of Turborepo:
+```bash
+# Start all services in development mode
+bun run dev
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+# Or start individual services
+bun run dev --filter=frontend    # Next.js frontend
+bun run dev --filter=api         # Express API
+bun run dev --filter=hub         # WebSocket hub
+bun run dev --filter=validator   # Validator node
+```
+
+### Build for Production
+
+```bash
+# Build all applications
+bun run build
+
+# Type checking across all packages
+bun run check-types
+
+# Lint all code
+bun run lint
+```
+
+## 🗄️ Database Schema
+
+The system uses PostgreSQL with the following core entities:
+
+```prisma
+model User {
+  id    String @id @default(uuid())
+  email String
+}
+
+model Website {
+  id       String        @id @default(uuid())
+  url      String
+  userId   String
+  disabled Boolean       @default(false)
+  ticks    WebsiteTick[]
+}
+
+model Validator {
+  id             String        @id @default(uuid())
+  publicKey      String        // Solana wallet public key
+  location       String        // Geographic location
+  ip             String        // Validator IP address
+  pendingPayouts Int           @default(0)
+  ticks          WebsiteTick[]
+}
+
+model WebsiteTick {
+  id          String        @id @default(uuid())
+  websiteId   String
+  validatorId String
+  createdAt   DateTime
+  status      WebsiteStatus // Good | Bad
+  latency     Float         // Response time in ms
+}
+```
+
+## 🔧 API Endpoints
+
+### Website Management
+- `POST /api/v1/website` - Add website for monitoring
+- `GET /api/v1/websites` - List user's websites
+- `GET /api/v1/website/status` - Get website status and ticks
+- `DELETE /api/v1/website` - Remove website from monitoring
+
+### Validator System
+- `POST /api/v1/payout/:validatorId` - Process validator payments
+- WebSocket endpoints for real-time validator coordination
+
+## 🔐 Security Features
+
+- **JWT Authentication**: Secure API access with JSON Web Tokens
+- **Cryptographic Validation**: Solana signature verification for validators
+- **CORS Protection**: Configured cross-origin resource sharing
+- **Input Validation**: Request validation and sanitization
+- **Environment Isolation**: Separate configurations for dev/prod
+
+## 🌐 Validator Network
+
+The validator system uses a hub-and-spoke model:
+
+1. **Hub Server**: Central coordination via WebSocket (port 8081)
+2. **Validator Nodes**: Distributed workers performing checks
+3. **Crypto Authentication**: Solana wallet-based identity verification
+4. **Incentive Mechanism**: Payment system for validated checks
+
+### Validator Registration Process
+```typescript
+// Validator signs up with cryptographic proof
+const signedMessage = await signMessage(`Signed message for ${callbackId}, ${publicKey}`, keypair);
+
+// Hub verifies signature and registers validator
+const verified = await verifyMessage(message, publicKey, signedMessage);
+```
+
+## 📊 Monitoring Workflow
+
+1. **Website Registration**: Business owner adds website URL
+2. **Validator Assignment**: Hub distributes check tasks to validators
+3. **Distributed Testing**: Multiple validators test from different locations
+4. **Result Aggregation**: Hub collects and processes validation results
+5. **Real-time Updates**: Dashboard shows live status and analytics
+6. **Payout Processing**: Validators receive compensation for successful checks
+
+## 🚀 Deployment
+
+### Environment Variables
+```bash
+# Database
+DATABASE_URL="postgresql://user:password@localhost:5432/better_uptime"
+
+# Authentication
+CLERK_SECRET_KEY="your_clerk_secret"
+
+# Blockchain
+SOLANA_RPC_URL="https://api.mainnet-beta.solana.com"
+VALIDATOR_PRIVATE_KEY="[1,2,3,...]"  # Solana keypair as array
+```
+
+### Production Build
+```bash
+# Build all packages
+bun run build
+
+# Start production servers
+cd apps/api && bun start
+cd apps/hub && bun start
+cd apps/frontend && bun start
+```
+
+## 🤝 Target Users
+
+### Business Owners
+Need comprehensive website uptime monitoring with global coverage to ensure optimal user experience across all geographical regions.
+
+### Validators/Earners
+Individuals looking to monetize their internet connection and computing resources by participating in the distributed monitoring network.
+
+## 📈 Scalability
+
+- **Horizontal Validator Scaling**: Easy addition of new validator nodes
+- **Database Optimization**: Prisma ORM with connection pooling
+- **Monorepo Benefits**: Shared code and efficient CI/CD
+- **Microservice Architecture**: Independent scaling of components
+
+---
+
+<div align="center">
+
+### 🌟 **Built with Modern Technologies** 🌟
+
+![Bun](https://img.shields.io/badge/Bun-%23000000.svg?style=for-the-badge&logo=bun&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Solana](https://img.shields.io/badge/Solana-%239945FF.svg?style=for-the-badge&logo=solana&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+
+### 💫 **Better Uptime - Monitoring the web, one validator at a time** 💫
+
+*Made with ❤️ by the JavaScript ecosystem*
+
+[![GitHub stars](https://img.shields.io/github/stars/aakifnehal/better-uptime?style=social)](https://github.com/aakifnehal/better-uptime)
+[![GitHub forks](https://img.shields.io/github/forks/aakifnehal/better-uptime?style=social)](https://github.com/aakifnehal/better-uptime)
+
+---
+
+**🚀 Ready to monitor the world? Get started today!**
+
+</div>
+
